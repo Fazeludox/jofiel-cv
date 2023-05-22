@@ -41,8 +41,7 @@
 }
 \ProcessOptions\relax
 \LoadClass{article}
-
-
+\usepackage{datetime}
 %-------------------------------------------------------------------------------
 %                3rd party packages
 %-------------------------------------------------------------------------------
@@ -123,7 +122,7 @@
 \definecolor{white}{HTML}{FFFFFF}
 \definecolor{black}{HTML}{000000}
 \definecolor{darkgray}{HTML}{333333}
-\definecolor{gray}{HTML}{5D5D5D}
+\definecolor{gray}{HTML}{323232}
 \definecolor{lightgray}{HTML}{999999}
 % Basic colors
 \definecolor{green}{HTML}{C2E15F}
@@ -177,6 +176,7 @@
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{awesome} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
+\newcommand*{\headeraboutstyle}[1]{{\fontsize{9pt}{1em}\bodyfont\itshape\color{text} #1}}
 \newcommand*{\headerquotestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\itshape\color{darktext} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
 \newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
@@ -354,6 +354,8 @@
 % Usage: \quote{<quote>}
 \renewcommand*{\quote}[1]{\def\@quote{#1}}
 
+\newcommand*{\about}[1]{\def\@about{#1}}
+
 % Defines recipient's information (cover letter only)
 % Usage: \recipient{<recipient name>}{<recipient address>}
 % Usage: \recipientname{<recipient name>}
@@ -403,8 +405,8 @@
 \newcommand{\acvHeaderAfterQuoteSkip}{5mm}
 
 % Others
-\newcommand{\acvSectionTopSkip}{3mm}
-\newcommand{\acvSectionContentTopSkip}{2.5mm}
+\newcommand{\acvSectionTopSkip}{2.5mm}
+\newcommand{\acvSectionContentTopSkip}{2.25mm}
 
 
 %-------------------------------------------------------------------------------
@@ -585,9 +587,17 @@
           \@extrainfo%
         }%
     } \\[\acvHeaderAfterSocialSkip]%
+    \ifthenelse{\isundefined{\@about}}
+    {}
+    {
+      \vspace{-0.5em}\headeraboutstyle{\@about\\}\vspace{\acvHeaderAfterQuoteSkip}
+    }%
     \ifthenelse{\isundefined{\@quote}}%
       {}%
-      {\headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}}%
+      {
+        \headerquotestyle{\@quote\\}\vspace{\acvHeaderAfterQuoteSkip}
+      }%
+    
   \end{minipage}%
   \begin{minipage}[c]{\headerphotowidth}%
     \ifthenelse{\equal{\@photoalign}{right}}{\raggedleft\drawphoto}{}
